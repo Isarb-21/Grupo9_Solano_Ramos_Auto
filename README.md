@@ -1,4 +1,4 @@
-# 💻 Sofware de Automatizacion  — Grupo 10 ️😁🤖
+# 💻 Sofware de Automatizacion  — Grupo 9 ️😁🤖
 
 
 # 🤖 Proyecto de Automatización Inteligente con n8n
