@@ -30,7 +30,7 @@
             {
               "id": "b5473ec5-eed5-44b0-afaf-d2a57239a784",
               "leftValue": "=  {{ $json.body.email }}",
-              "rightValue": "^[a-zA-Z0-9_%.+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+              "rightValue": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
               "operator": {
                 "type": "string",
                 "operation": "regex"
@@ -54,17 +54,26 @@
     },
     {
       "parameters": {
+        "sendTo": "dreewrootsstark@gmail.com",
+        "subject": "Nuevos datos recibidos en N8N",
+        "message": "=<!DOCTYPE html> <html lang=\"es\"> <head>     <meta charset=\"UTF-8\"> </head> <body style=\"font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ffffff; margin: 0; padding: 20px;\">     <div style=\"max-width: 600px; margin: 0 auto; padding: 30px; border-left: 4px solid #2196F3;\">         <h2 style=\"color: #333333; margin-top: 0;\">Mensaje recibido</h2>         <div style=\"background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0;\">             <p style=\"color: #555555; font-size: 15px; line-height: 1.8; margin: 0; white-space: pre-wrap;\">{{ $('Webhook').item.json.body.mensaje }}</p>         </div>         <p style=\"color: #999999; font-size: 12px; margin-top: 30px;\">             <strong>Fecha:</strong> {{ $now.toFormat('dd/MM/yyyy HH:mm') }}         </p>     </div> </body> </html> 📋 Copiar",
         "options": {}
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -64,
-        -112
+        -32,
+        -128
       ],
       "id": "fa643ea9-a680-414c-998e-0b3a40acdfc0",
       "name": "Send a message",
-      "webhookId": "b78af675-3a96-4501-8a40-ce433aba9ec7"
+      "webhookId": "b78af675-3a96-4501-8a40-ce433aba9ec7",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ICff4uay8zVnq1Zy",
+          "name": "Gmail account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -98,8 +107,9 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "53608123-3e0f-479e-9f8e-c9ff197d6282",
+  "versionId": "ac6d7e80-5009-4019-88fd-9de5ba4cfd00",
   "meta": {
+    "templateCredsSetupCompleted": true,
     "instanceId": "2334754f6b82c69a74002c054fba5bcd13c001f0a965ee433a5d02e5f60c3a76"
   },
   "id": "dhYGA1GCqm1XBxwE",
