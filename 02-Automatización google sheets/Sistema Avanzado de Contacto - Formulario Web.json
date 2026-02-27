@@ -1,0 +1,174 @@
+{
+  "name": "Sistema Avanzado de Contacto - Formulario Web",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "contacto-formulario",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "63314fb0-a4f3-4241-ad17-c91a6dce6e30",
+      "name": "Webhook",
+      "webhookId": "414f8c24-e8f6-4042-b115-da5b00a4f97b"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8104a212-404f-4e99-9135-dcfef3508553",
+              "leftValue": "={{ $json.email }}",
+              "rightValue": "^[a-zA-Z0-9_%.+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            },
+            {
+              "id": "76c1f991-e228-4c2c-9c76-2852aad57abb",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "1f4a5931-eeb5-4cea-a6a7-2296e174fb0d",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b60cdf18-448d-4e0f-b229-5fc494ee7800",
+              "name": "timestamp",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "38538419-63e9-4c17-bed0-37e344b4bb78",
+              "name": "id_solicitud",
+              "value": "={{ $uuid() }}",
+              "type": "string"
+            },
+            {
+              "id": "b3fc5088-8584-4891-8c7c-6d988c7d5c6c",
+              "name": "estado",
+              "value": "NUEVO",
+              "type": "string"
+            },
+            {
+              "id": "bcb870a5-f479-416e-a4b6-d29a398e2f78",
+              "name": "asignado_a",
+              "value": "Soporte Técnico",
+              "type": "string"
+            },
+            {
+              "id": "05d3e202-a7dc-4b8e-a5d7-96bff537daa2",
+              "name": "origen_sistema",
+              "value": "Formulario Web - Sistema n8n",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        -96
+      ],
+      "id": "b48f9a29-c4bd-4693-b0e9-eea6c37b30c1",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        624,
+        -96
+      ],
+      "id": "997ec294-9016-49b6-a794-96753c77ec33",
+      "name": "Send a message",
+      "webhookId": "94675b88-2173-4cd3-926b-c8abad2783d9"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "47366838-22d5-4959-9104-7b898db73890",
+  "meta": {
+    "instanceId": "df3817e93dd9857866803348ccedc559e6131a9b0a110618d997e713531c8018"
+  },
+  "id": "nvYB7lOpVdvCHtXH",
+  "tags": []
+}
