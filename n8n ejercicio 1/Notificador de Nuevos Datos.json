@@ -3,22 +3,6 @@
   "nodes": [
     {
       "parameters": {
-        "httpMethod": "POST",
-        "path": "/notify",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2.1,
-      "position": [
-        -416,
-        0
-      ],
-      "id": "2c4f3dde-4aa5-4daf-b6b5-fca00f38c8b0",
-      "name": "Webhook",
-      "webhookId": "e5aa7057-41ce-4f0f-93e3-e7d14242eb01"
-    },
-    {
-      "parameters": {
         "conditions": {
           "options": {
             "caseSensitive": true,
@@ -28,9 +12,9 @@
           },
           "conditions": [
             {
-              "id": "b5473ec5-eed5-44b0-afaf-d2a57239a784",
-              "leftValue": "=  {{ $json.body.email }}",
-              "rightValue": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+              "id": "577e727e-bc54-4440-8d6f-d2f78e52999e",
+              "leftValue": "={{ $json.body.email }}",
+              "rightValue": "^[a-zA-Z0-9_%.+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
               "operator": {
                 "type": "string",
                 "operation": "regex"
@@ -39,61 +23,189 @@
           ],
           "combinator": "and"
         },
-        "options": {
-          "ignoreCase": false
-        }
+        "options": {}
       },
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -208,
+        -400,
         0
       ],
-      "id": "aaf5971f-917e-4865-8207-9c667e949f41",
+      "id": "0410d306-2c7d-412d-a0be-1de178dff457",
       "name": "If"
     },
     {
       "parameters": {
         "sendTo": "dreewrootsstark@gmail.com",
-        "subject": "Nuevos datos recibidos en N8N",
-        "message": "=<!DOCTYPE html> <html lang=\"es\"> <head>     <meta charset=\"UTF-8\"> </head> <body style=\"font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ffffff; margin: 0; padding: 20px;\">     <div style=\"max-width: 600px; margin: 0 auto; padding: 30px; border-left: 4px solid #2196F3;\">         <h2 style=\"color: #333333; margin-top: 0;\">Mensaje recibido</h2>         <div style=\"background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0;\">             <p style=\"color: #555555; font-size: 15px; line-height: 1.8; margin: 0; white-space: pre-wrap;\">{{ $('Webhook').item.json.body.mensaje }}</p>         </div>         <p style=\"color: #999999; font-size: 12px; margin-top: 30px;\">             <strong>Fecha:</strong> {{ $now.toFormat('dd/MM/yyyy HH:mm') }}         </p>     </div> </body> </html> 📋 Copiar",
+        "subject": "Nuevos datos recibidos en n8n",
+        "message": "=<!DOCTYPE html> <html lang=\"es\"> <head>     <meta charset=\"UTF-8\"> </head> <body style=\"font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ffffff; margin: 0; padding: 20px;\">     <div style=\"max-width: 600px; margin: 0 auto; padding: 30px; border-left: 4px solid #2196F3;\">         <h2 style=\"color: #333333; margin-top: 0;\">Mensaje recibido</h2>         <div style=\"background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0;\">             <p style=\"color: #555555; font-size: 15px; line-height: 1.8; margin: 0; white-space: pre-wrap;\">{{ $('Webhook').item.json.body.mensaje }}</p>         </div>         <p style=\"color: #999999; font-size: 12px; margin-top: 30px;\">             <strong>Fecha:</strong> {{ $now.toFormat('dd/MM/yyyy HH:mm') }}         </p>     </div> </body> </html>",
         "options": {}
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -32,
+        -192,
         -128
       ],
-      "id": "fa643ea9-a680-414c-998e-0b3a40acdfc0",
+      "id": "9152b4f9-c3d7-475a-a8b3-acd1263c77c2",
       "name": "Send a message",
-      "webhookId": "b78af675-3a96-4501-8a40-ce433aba9ec7",
+      "webhookId": "e0a8ecab-880f-48e5-9180-22686c0d1ecb",
       "credentials": {
         "gmailOAuth2": {
-          "id": "ICff4uay8zVnq1Zy",
-          "name": "Gmail account"
+          "id": "jel9q5fUGc6YKcx5",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"Fecha/Hora\": \"={{ $now.toISO() }}\",\n  \"Dato Recibido\": \"={{ JSON.stringify($json) }}\",\n  \"Tipo de Error\": \"Email inválido o formato incorrecto\",\n  \"Webhook Origen\": \"={{ $json.headers?.origin || 'Desconocido' }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -192,
+        96
+      ],
+      "id": "50f6d01b-6b2d-407f-9d54-4fdd6c5da2bd",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "/notify",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -560,
+        0
+      ],
+      "id": "23c5b920-14c3-4df6-aba2-478adf80e63b",
+      "name": "Webhook",
+      "webhookId": "07989df4-7271-4b7f-a8af-cf1893775106"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1Xrdz2IY3_3_0Hv36tjHcNHU9MdsMcBJ4fQ9Y8qHV2lY/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Hoja 1",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "Fecha/Hora"
+          ],
+          "schema": [
+            {
+              "id": "Fecha/Hora",
+              "displayName": "Fecha/Hora",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Dato Recibido",
+              "displayName": "Dato Recibido",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Tipo de Error",
+              "displayName": "Tipo de Error",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Webhook Origen",
+              "displayName": "Webhook Origen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        16,
+        96
+      ],
+      "id": "f17fc33c-2b54-4428-8a36-59089b1188f9",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "6FLWjym5kPOTlj3Z",
+          "name": "Google Sheets account 2"
         }
       }
     }
   ],
   "pinData": {},
   "connections": {
-    "Webhook": {
+    "If": {
       "main": [
         [
           {
-            "node": "If",
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "If": {
+    "Edit Fields": {
       "main": [
         [
           {
-            "node": "Send a message",
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -107,7 +219,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "ac6d7e80-5009-4019-88fd-9de5ba4cfd00",
+  "versionId": "acc48aca-6f3f-4bdf-b1d4-bcf178d9bcd4",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "2334754f6b82c69a74002c054fba5bcd13c001f0a965ee433a5d02e5f60c3a76"
