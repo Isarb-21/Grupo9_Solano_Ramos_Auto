@@ -10,12 +10,12 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -416,
-        96
+        -864,
+        -16
       ],
-      "id": "8fd57905-9d10-43a7-8fbe-e47748e6538a",
+      "id": "867fc3cb-dc20-4c5b-b07e-9350fd3fa18f",
       "name": "Webhook",
-      "webhookId": "414f8c24-e8f6-4042-b115-da5b00a4f97b"
+      "webhookId": "4b048f46-721a-4de1-9721-c69a65ef3b17"
     },
     {
       "parameters": {
@@ -28,36 +28,35 @@
           },
           "conditions": [
             {
-              "id": "8104a212-404f-4e99-9135-dcfef3508553",
-              "leftValue": "={{ $json.email }}",
-              "rightValue": "^[a-zA-Z0-9_%.+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+              "id": "275c33a6-b245-4289-9a60-021f7e549ec7",
+              "leftValue": "={{ $json.body.email }}",
+              "rightValue": "^[a-zA-Z0-9_%.+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$",
               "operator": {
                 "type": "string",
                 "operation": "regex"
               }
             },
             {
-              "id": "76c1f991-e228-4c2c-9c76-2852aad57abb",
-              "leftValue": "",
-              "rightValue": "",
+              "id": "dd9bb78b-0e72-442c-8a06-71826f5dd592",
+              "leftValue": "={{ $json.body.telefono }}",
+              "rightValue": "^\\+57\\s?\\d{10}$",
               "operator": {
                 "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
+                "operation": "equals"
               }
             }
           ],
-          "combinator": "and"
+          "combinator": "or"
         },
         "options": {}
       },
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -208,
-        96
+        -672,
+        -16
       ],
-      "id": "96d71b0b-9bd8-4f1f-a93f-2e3f158d5b35",
+      "id": "efb47e95-8127-4973-8cc3-01ead010a852",
       "name": "If"
     },
     {
@@ -65,65 +64,100 @@
         "assignments": {
           "assignments": [
             {
-              "id": "b60cdf18-448d-4e0f-b229-5fc494ee7800",
-              "name": "timestamp",
-              "value": "={{ Date.now() }}",
-              "type": "number"
-            },
-            {
-              "id": "38538419-63e9-4c17-bed0-37e344b4bb78",
-              "name": "id_solicitud",
-              "value": "={{ \"REQ-\" + Date.now().toString(36).toUpperCase() }}",
+              "id": "b9a49376-afef-4cc4-aa98-731f892548a9",
+              "name": "Timestamp",
+              "value": "={{ $now.toISO() }}",
               "type": "string"
             },
             {
-              "id": "b3fc5088-8584-4891-8c7c-6d988c7d5c6c",
-              "name": "estado",
-              "value": "NUEVO",
+              "id": "a58b6663-47ce-4487-b121-25a0c5c8b35c",
+              "name": "ID_Solicitud",
+              "value": "={{ $workflow.id }}",
               "type": "string"
             },
             {
-              "id": "bcb870a5-f479-416e-a4b6-d29a398e2f78",
-              "name": "asignado_a",
-              "value": "Soporte Técnico",
+              "id": "f833f254-919e-4c7e-a0fa-dcf90951bf48",
+              "name": "Estado ",
+              "value": "\"Nuevo\"",
               "type": "string"
             },
             {
-              "id": "05d3e202-a7dc-4b8e-a5d7-96bff537daa2",
-              "name": "origen_sistema",
-              "value": "Formulario Web - Sistema n8n",
+              "id": "b407b6c4-9ff9-4251-b279-fb3fbc6b9015",
+              "name": "Asigando_a",
+              "value": "\"Soporte tecnico\"",
+              "type": "string"
+            },
+            {
+              "id": "9e467d3f-ca65-40fd-a02d-14b7cb1a4f20",
+              "name": "Origen_sistema",
+              "value": "={{ $workflow.name }}",
+              "type": "string"
+            },
+            {
+              "id": "23e1feb2-0225-4e16-8237-706f7890d39d",
+              "name": "Empresa",
+              "value": "={{ $json.body.empresa }}",
+              "type": "string"
+            },
+            {
+              "id": "c8252aa0-7b8d-4b0e-9f56-753bc795dacb",
+              "name": "Mensaje ",
+              "value": "={{ $json.body.mensaje }}",
+              "type": "string"
+            },
+            {
+              "id": "466c29f9-ad36-471f-b01b-807306c5ab31",
+              "name": "Prioridad",
+              "value": "={{ $json.body.prioridad }}",
+              "type": "string"
+            },
+            {
+              "id": "f1c9f289-7aa6-4af4-a834-245cfe1f524b",
+              "name": "Origen",
+              "value": "={{ $json.body.origen }}",
+              "type": "string"
+            },
+            {
+              "id": "ea1e9a7d-7a52-4b5f-8ac1-9ea16f07e94f",
+              "name": "Asunto",
+              "value": "={{ $json.body.asunto }}",
+              "type": "string"
+            },
+            {
+              "id": "50258a79-a5ec-4138-8d4b-643d8d80e5b6",
+              "name": "Telefono",
+              "value": "={{ $json.body.telefono }}",
               "type": "string"
             }
           ]
         },
-        "includeOtherFields": true,
         "options": {}
       },
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        0,
-        0
+        -400,
+        -160
       ],
-      "id": "4f1d833b-f8a5-47c4-b05a-21a9378cc7ac",
+      "id": "28dadd3b-3d7c-4e83-8437-edb9ab3bdd70",
       "name": "Edit Fields"
     },
     {
       "parameters": {
         "sendTo": "dreewrootsstark@gmail.com",
-        "subject": "=Nueva Solicitud de Contacto - {{ $json.nombre }}",
-        "message": "=<!DOCTYPE html> <html lang=\"es\"> <head>     <meta charset=\"UTF-8\">     <style>         body { font-family: 'Segoe UI', Tahoma, Geneva, sans-serif; background-color: #f5f5f5; margin: 0; padding: 20px; }         .container { max-width: 700px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }         .header { background: linear-gradient(135deg, #1a2f4b 0%, #2d5a8a 100%); color: white; padding: 30px; }         .header h2 { margin: 0; font-size: 24px; }         .content { padding: 30px; }         .field { margin-bottom: 20px; }         .label { color: #2d5a8a; font-weight: bold; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }         .value { color: #333; font-size: 15px; line-height: 1.6; padding: 10px; background: #f9f9f9; border-left: 3px solid #00d4ff; }         .footer { background: #f9f9f9; padding: 20px; text-align: center; color: #666; font-size: 12px; border-top: 1px solid #ddd; }         .id-badge { display: inline-block; background: #00d4ff; color: white; padding: 5px 10px; border-radius: 4px; font-size: 12px; margin-top: 10px; }     </style> </head> <body>     <div class=\"container\">         <div class=\"header\">             <h2>✉️ Nueva Solicitud de Contacto Recibida</h2>             <p>Hemos recibido tu mensaje. Nos pondremos en contacto pronto.</p>         </div>                  <div class=\"content\">             <div class=\"field\">                 <div class=\"label\">👤 Nombre Completo</div>                 <div class=\"value\">{{ $json.nombre }}</div>             </div>              <div class=\"field\">                 <div class=\"label\">📧 Email</div>                 <div class=\"value\">{{ $json.email }}</div>             </div>              <div class=\"field\">                 <div class=\"label\">🏢 Empresa</div>                 <div class=\"value\">{{ $json.empresa }}</div>             </div>              <div class=\"field\">                 <div class=\"label\">📱 Teléfono</div>                 <div class=\"value\">{{ $json.telefono }}</div>             </div>              <div class=\"field\">                 <div class=\"label\">🎯 Asunto</div>                 <div class=\"value\">{{ $json.asunto }}</div>             </div>              <div class=\"field\">                 <div class=\"label\">💬 Mensaje</div>                 <div class=\"value\" style=\"white-space: pre-wrap;\">{{ $json.mensaje }}</div>             </div>              <div class=\"field\">                 <div class=\"label\">⚡ Prioridad</div>                 <div class=\"value\">{{ $json.prioridad.toUpperCase() }}</div>             </div>              <hr style=\"border: none; border-top: 1px solid #ddd; margin: 30px 0;\">              <div style=\"background: #f0f7ff; padding: 15px; border-radius: 5px; font-size: 12px; color: #2d5a8a;\">                 <strong>🔍 Detalles del Sistema:</strong><br>                 ID de Solicitud: {{ $json.id_solicitud }}<br>                 Fecha/Hora: {{ $now.toFormat('dd/MM/yyyy HH:mm:ss') }}<br>                 Estado: {{ $json.estado }}<br>                 Asignado a: {{ $json.asignado_a }}             </div>         </div>          <div class=\"footer\">             <p>Este es un email automático del sistema de contacto. Por favor no respondas a este correo. Usa el formulario web para enviar mensajes adicionales.</p>             <p><strong>Corporación Universitaria de Huila - Ingeniería Mecatrónica</strong></p>         </div>     </div> </body> </html> 📋 Copiar",
+        "subject": "=Nueva solicitud de contacto - {{ $('If').item.json.body.nombre }}",
+        "message": "=<!DOCTYPE html> <html lang=\"es\"> <head>     <meta charset=\"UTF-8\">     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">     <style>         /* Estilos base para clientes de correo */         body {              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;              background-color: #f5f5f5;              margin: 0;              padding: 20px;              -webkit-text-size-adjust: 100%;             -ms-text-size-adjust: 100%;         }         .container {              max-width: 700px;              margin: 0 auto;              background: white;              border-radius: 8px;              box-shadow: 0 2px 8px rgba(0,0,0,0.1);              overflow: hidden;          }         .header {              background: linear-gradient(135deg, #1a2f4b 0%, #2d5a8a 100%);              color: white;              padding: 30px;          }         .header h2 {              margin: 0 0 10px 0;              font-size: 24px;              font-weight: 500;          }         .header p {              margin: 0;              opacity: 0.9;              font-size: 16px;          }         .content {              padding: 30px;          }         .field {              margin-bottom: 20px;          }         .label {              color: #2d5a8a;              font-weight: bold;              font-size: 13px;              text-transform: uppercase;              letter-spacing: 1px;              margin-bottom: 5px;          }         .value {              color: #333;              font-size: 15px;              line-height: 1.6;              padding: 12px 15px;              background: #f9f9f9;              border-left: 3px solid #00d4ff;              border-radius: 0 4px 4px 0;             word-wrap: break-word;         }         .footer {              background: #f9f9f9;              padding: 20px;              text-align: center;              color: #666;              font-size: 12px;              border-top: 1px solid #ddd;          }         .id-badge {              display: inline-block;              background: #00d4ff;              color: white;              padding: 5px 10px;              border-radius: 4px;              font-size: 12px;              margin-top: 10px;          }         hr {              border: none;              border-top: 1px solid #ddd;              margin: 30px 0;          }         .system-details {              background: #f0f7ff;              padding: 15px;              border-radius: 5px;              font-size: 12px;              color: #2d5a8a;              border-left: 3px solid #2d5a8a;         }         .system-details strong {             display: block;             margin-bottom: 8px;             font-size: 13px;         }         .system-details div {             margin: 5px 0;         }         /* Estilo para prioridad alta */         .prioridad-alta {             color: #d32f2f;             font-weight: bold;         }         /* Responsive */         @media only screen and (max-width: 600px) {             .container { width: 100% !important; }             .header, .content { padding: 20px !important; }         }     </style> </head> <body>     <div class=\"container\">         <div class=\"header\">             <h2>✉️ Nueva Solicitud de Contacto</h2>             <p>Se ha recibido un nuevo mensaje a través del formulario web</p>         </div>                  <div class=\"content\">             <!-- Información del Contacto -->             <div class=\"field\">                 <div class=\"label\">👤 Nombre Completo</div>                 <div class=\"value\">{{ $('If').item.json.body.nombre }}</div>             </div>              <div class=\"field\">                 <div class=\"label\">📧 Email</div>                 <div class=\"value\">{{ $('If').item.json.body.email }}</div>             </div>              <div class=\"field\">                 <div class=\"label\">🏢 Empresa</div>                 <div class=\"value\">{{ $('If').item.json.body.empresa }}</div>             </div>              <div class=\"field\">                 <div class=\"label\">📱 Teléfono</div>                 <div class=\"value\">         {{ $json.Telefono }}                       </div>             </div>              <div class=\"field\">                 <div class=\"label\">🎯 Asunto</div>                 <div class=\"value\">{{ $('If').item.json.body.asunto }}</div>             </div>              <div class=\"field\">                 <div class=\"label\">💬 Mensaje</div>                 <div class=\"value\" style=\"white-space: pre-wrap; background: #fff; border-left-color: #ff9800;\">{{ $('If').item.json.body.mensaje }}</div>             </div>              <div class=\"field\">                 <div class=\"label\">⚡ Prioridad</div>                 <div class=\"value {% if $json.prioridad == 'alta' %}prioridad-alta{% endif %}\">       {{ $json.Prioridad }}                                </div>             </div>              <div class=\"field\">                 <div class=\"label\">🌐 Origen</div>                 <div class=\"value\">{{ $('If').item.json.body.origen }}</div>             </div>              <hr>              <!-- Detalles del Sistema (CORREGIDO) -->             <div class=\"system-details\">                 <strong>🔍 Información de Seguimiento</strong>                 <div><strong>ID Único:</strong> {{ $workflow.id }}</div>                 <div><strong>Fecha/Hora:</strong> {{ $json.Timestamp }}</div>                                 <div><strong>Estado:</strong> {{ $json['Estado '] }}</div>                 <div><strong>Asignado a:</strong> {{ $json.Asigando_a }}</div>                 <div><strong>IP Origen:</strong> {{ $('If').item.json.body.origen }}</div>             </div>              <!-- Badge de seguimiento -->             <div style=\"text-align: center; margin-top: 20px;\">                 <span class=\"id-badge\">ID: {{ $workflow.id }}</span>             </div>         </div>          <div class=\"footer\">             <p style=\"margin: 0 0 10px 0;\">Este es un mensaje automático del sistema de gestión de contactos.</p>             <p style=\"margin: 0 0 5px 0;\"><strong>Corporación Universitaria de Huila - Ingeniería Mecatrónica</strong></p>             <p style=\"margin: 0; font-size: 11px; color: #999;\">                 Este correo fue generado automáticamente. Por favor no responder a esta dirección.             </p>         </div>     </div> </body> </html>",
         "options": {}
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        208,
-        0
+        -224,
+        -160
       ],
-      "id": "0b9e72e3-60a9-49ac-85ec-54651a90b817",
+      "id": "2b219b86-5a1b-42dd-a40e-c40c2c3f91c4",
       "name": "Send a message",
-      "webhookId": "94675b88-2173-4cd3-926b-c8abad2783d9",
+      "webhookId": "7a89b21f-9a33-41f7-b981-355de728bc39",
       "credentials": {
         "gmailOAuth2": {
           "id": "jel9q5fUGc6YKcx5",
@@ -133,38 +167,146 @@
     },
     {
       "parameters": {
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        0,
-        208
-      ],
-      "id": "5a185867-00b9-46fb-8af7-6befa553cf94",
-      "name": "Edit Fields1"
-    },
-    {
-      "parameters": {
         "operation": "append",
         "documentId": {
           "__rl": true,
-          "mode": "list",
-          "value": ""
+          "value": "https://docs.google.com/spreadsheets/d/1ZAWfMD3Ot7dMZ2AJLlMLtyQ-Y54Q-9H_we9YEJewOp8/edit?gid=0#gid=0",
+          "mode": "url"
         },
         "sheetName": {
           "__rl": true,
-          "mode": "list",
-          "value": ""
-        }
+          "value": "https://docs.google.com/spreadsheets/d/1ZAWfMD3Ot7dMZ2AJLlMLtyQ-Y54Q-9H_we9YEJewOp8/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ $('Edit Fields').item.json.ID_Solicitud }}",
+            "Nombre": "={{ $('Webhook').item.json.body.nombre }}",
+            "Email": "={{ $('Webhook').item.json.body.email }}",
+            "Empresa": "={{ $('Edit Fields').item.json.Empresa }}",
+            "Teléfono": "={{ $('Edit Fields').item.json.Telefono }}",
+            "Asunto": "={{ $('Edit Fields').item.json.Asunto }}",
+            "Mensaje": "={{ $('Edit Fields').item.json['Mensaje '] }}",
+            "Prioridad": "={{ $('Edit Fields').item.json.Prioridad }}",
+            "Fecha/Hora": "={{ $('Edit Fields').item.json.Timestamp }}",
+            "Estado": "={{ $('Edit Fields').item.json['Estado '] }}",
+            "Asignado a": "={{ $('Edit Fields').item.json.Asigando_a }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Empresa",
+              "displayName": "Empresa",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Teléfono",
+              "displayName": "Teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Asunto",
+              "displayName": "Asunto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Mensaje",
+              "displayName": "Mensaje",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prioridad",
+              "displayName": "Prioridad",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Fecha/Hora",
+              "displayName": "Fecha/Hora",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Asignado a",
+              "displayName": "Asignado a",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
       },
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        400,
-        0
+        -16,
+        -160
       ],
-      "id": "db2b1745-a361-473d-a54d-2f7c217c7430",
+      "id": "07de2408-70b9-4c8e-9eea-fff5d867d85f",
       "name": "Append row in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -175,25 +317,229 @@
     },
     {
       "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b9a49376-afef-4cc4-aa98-731f892548a9",
+              "name": "Timestamp",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "a58b6663-47ce-4487-b121-25a0c5c8b35c",
+              "name": "ID_Solicitud",
+              "value": "={{ $workflow.id }}",
+              "type": "string"
+            },
+            {
+              "id": "f833f254-919e-4c7e-a0fa-dcf90951bf48",
+              "name": "Estado ",
+              "value": "\"Nuevo\"",
+              "type": "string"
+            },
+            {
+              "id": "b407b6c4-9ff9-4251-b279-fb3fbc6b9015",
+              "name": "Asigando_a",
+              "value": "\"Soporte tecnico\"",
+              "type": "string"
+            },
+            {
+              "id": "9e467d3f-ca65-40fd-a02d-14b7cb1a4f20",
+              "name": "Origen_sistema",
+              "value": "={{ $workflow.name }}",
+              "type": "string"
+            },
+            {
+              "id": "23e1feb2-0225-4e16-8237-706f7890d39d",
+              "name": "Empresa",
+              "value": "={{ $json.body.empresa }}",
+              "type": "string"
+            },
+            {
+              "id": "c8252aa0-7b8d-4b0e-9f56-753bc795dacb",
+              "name": "Mensaje ",
+              "value": "={{ $json.body.mensaje }}",
+              "type": "string"
+            },
+            {
+              "id": "466c29f9-ad36-471f-b01b-807306c5ab31",
+              "name": "Prioridad",
+              "value": "={{ $json.body.prioridad }}",
+              "type": "string"
+            },
+            {
+              "id": "f1c9f289-7aa6-4af4-a834-245cfe1f524b",
+              "name": "Origen",
+              "value": "={{ $json.body.origen }}",
+              "type": "string"
+            },
+            {
+              "id": "ea1e9a7d-7a52-4b5f-8ac1-9ea16f07e94f",
+              "name": "Asunto",
+              "value": "={{ $json.body.asunto }}",
+              "type": "string"
+            },
+            {
+              "id": "50258a79-a5ec-4138-8d4b-643d8d80e5b6",
+              "name": "Telefono",
+              "value": "={{ $json.body.telefono }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -416,
+        80
+      ],
+      "id": "ec36832b-04f9-4ce8-a153-a2e1b8112ebb",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
         "operation": "append",
         "documentId": {
           "__rl": true,
-          "mode": "list",
-          "value": ""
+          "value": "https://docs.google.com/spreadsheets/d/1ZAWfMD3Ot7dMZ2AJLlMLtyQ-Y54Q-9H_we9YEJewOp8/edit?gid=0#gid=0",
+          "mode": "url"
         },
         "sheetName": {
           "__rl": true,
-          "mode": "list",
-          "value": ""
-        }
+          "value": "https://docs.google.com/spreadsheets/d/1ZAWfMD3Ot7dMZ2AJLlMLtyQ-Y54Q-9H_we9YEJewOp8/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nombre": "={{ $('Webhook').item.json.body.nombre }}",
+            "Email": "={{ $('Webhook').item.json.body.email }}",
+            "Empresa": "={{ $json.Empresa }}",
+            "Teléfono": "={{ $json.Telefono }}",
+            "Asunto": "={{ $json.Asunto }}",
+            "Mensaje": "={{ $json['Mensaje '] }}",
+            "Prioridad": "={{ $json.Prioridad }}",
+            "Fecha/Hora": "={{ $json.Timestamp }}",
+            "Estado": "={{ $json['Estado '] }}",
+            "Asignado a": "={{ $json.Asigando_a }}",
+            "ID": "={{ $execution.id }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Empresa",
+              "displayName": "Empresa",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Teléfono",
+              "displayName": "Teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Asunto",
+              "displayName": "Asunto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Mensaje",
+              "displayName": "Mensaje",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prioridad",
+              "displayName": "Prioridad",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Fecha/Hora",
+              "displayName": "Fecha/Hora",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Asignado a",
+              "displayName": "Asignado a",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
       },
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        208,
-        208
+        -208,
+        80
       ],
-      "id": "87a47fa6-cfba-49bd-b4bd-dadfd5ae88d5",
+      "id": "0b3e7a38-84c0-4e43-95a8-9c8caec0df77",
       "name": "Append row in sheet1",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -274,7 +620,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "12a9edc3-a90f-4d08-aeee-264f1b79abf6",
+  "versionId": "9027e3f1-041d-4829-bd3d-1eda09fe0a3f",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "2334754f6b82c69a74002c054fba5bcd13c001f0a965ee433a5d02e5f60c3a76"
