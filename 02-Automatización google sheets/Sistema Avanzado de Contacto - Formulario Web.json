@@ -10,10 +10,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        0,
-        0
+        -416,
+        96
       ],
-      "id": "63314fb0-a4f3-4241-ad17-c91a6dce6e30",
+      "id": "8fd57905-9d10-43a7-8fbe-e47748e6538a",
       "name": "Webhook",
       "webhookId": "414f8c24-e8f6-4042-b115-da5b00a4f97b"
     },
@@ -54,10 +54,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        208,
-        0
+        -208,
+        96
       ],
-      "id": "1f4a5931-eeb5-4cea-a6a7-2296e174fb0d",
+      "id": "96d71b0b-9bd8-4f1f-a93f-2e3f158d5b35",
       "name": "If"
     },
     {
@@ -67,13 +67,13 @@
             {
               "id": "b60cdf18-448d-4e0f-b229-5fc494ee7800",
               "name": "timestamp",
-              "value": "={{ $now.toISO() }}",
-              "type": "string"
+              "value": "={{ Date.now() }}",
+              "type": "number"
             },
             {
               "id": "38538419-63e9-4c17-bed0-37e344b4bb78",
               "name": "id_solicitud",
-              "value": "={{ $uuid() }}",
+              "value": "={{ \"REQ-\" + Date.now().toString(36).toUpperCase() }}",
               "type": "string"
             },
             {
@@ -102,25 +102,105 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        416,
-        -96
+        0,
+        0
       ],
-      "id": "b48f9a29-c4bd-4693-b0e9-eea6c37b30c1",
+      "id": "4f1d833b-f8a5-47c4-b05a-21a9378cc7ac",
       "name": "Edit Fields"
     },
     {
       "parameters": {
+        "sendTo": "dreewrootsstark@gmail.com",
+        "subject": "=Nueva Solicitud de Contacto - {{ $json.nombre }}",
+        "message": "=<!DOCTYPE html> <html lang=\"es\"> <head>     <meta charset=\"UTF-8\">     <style>         body { font-family: 'Segoe UI', Tahoma, Geneva, sans-serif; background-color: #f5f5f5; margin: 0; padding: 20px; }         .container { max-width: 700px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }         .header { background: linear-gradient(135deg, #1a2f4b 0%, #2d5a8a 100%); color: white; padding: 30px; }         .header h2 { margin: 0; font-size: 24px; }         .content { padding: 30px; }         .field { margin-bottom: 20px; }         .label { color: #2d5a8a; font-weight: bold; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }         .value { color: #333; font-size: 15px; line-height: 1.6; padding: 10px; background: #f9f9f9; border-left: 3px solid #00d4ff; }         .footer { background: #f9f9f9; padding: 20px; text-align: center; color: #666; font-size: 12px; border-top: 1px solid #ddd; }         .id-badge { display: inline-block; background: #00d4ff; color: white; padding: 5px 10px; border-radius: 4px; font-size: 12px; margin-top: 10px; }     </style> </head> <body>     <div class=\"container\">         <div class=\"header\">             <h2>✉️ Nueva Solicitud de Contacto Recibida</h2>             <p>Hemos recibido tu mensaje. Nos pondremos en contacto pronto.</p>         </div>                  <div class=\"content\">             <div class=\"field\">                 <div class=\"label\">👤 Nombre Completo</div>                 <div class=\"value\">{{ $json.nombre }}</div>             </div>              <div class=\"field\">                 <div class=\"label\">📧 Email</div>                 <div class=\"value\">{{ $json.email }}</div>             </div>              <div class=\"field\">                 <div class=\"label\">🏢 Empresa</div>                 <div class=\"value\">{{ $json.empresa }}</div>             </div>              <div class=\"field\">                 <div class=\"label\">📱 Teléfono</div>                 <div class=\"value\">{{ $json.telefono }}</div>             </div>              <div class=\"field\">                 <div class=\"label\">🎯 Asunto</div>                 <div class=\"value\">{{ $json.asunto }}</div>             </div>              <div class=\"field\">                 <div class=\"label\">💬 Mensaje</div>                 <div class=\"value\" style=\"white-space: pre-wrap;\">{{ $json.mensaje }}</div>             </div>              <div class=\"field\">                 <div class=\"label\">⚡ Prioridad</div>                 <div class=\"value\">{{ $json.prioridad.toUpperCase() }}</div>             </div>              <hr style=\"border: none; border-top: 1px solid #ddd; margin: 30px 0;\">              <div style=\"background: #f0f7ff; padding: 15px; border-radius: 5px; font-size: 12px; color: #2d5a8a;\">                 <strong>🔍 Detalles del Sistema:</strong><br>                 ID de Solicitud: {{ $json.id_solicitud }}<br>                 Fecha/Hora: {{ $now.toFormat('dd/MM/yyyy HH:mm:ss') }}<br>                 Estado: {{ $json.estado }}<br>                 Asignado a: {{ $json.asignado_a }}             </div>         </div>          <div class=\"footer\">             <p>Este es un email automático del sistema de contacto. Por favor no respondas a este correo. Usa el formulario web para enviar mensajes adicionales.</p>             <p><strong>Corporación Universitaria de Huila - Ingeniería Mecatrónica</strong></p>         </div>     </div> </body> </html> 📋 Copiar",
         "options": {}
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        624,
-        -96
+        208,
+        0
       ],
-      "id": "997ec294-9016-49b6-a794-96753c77ec33",
+      "id": "0b9e72e3-60a9-49ac-85ec-54651a90b817",
       "name": "Send a message",
-      "webhookId": "94675b88-2173-4cd3-926b-c8abad2783d9"
+      "webhookId": "94675b88-2173-4cd3-926b-c8abad2783d9",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "jel9q5fUGc6YKcx5",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        208
+      ],
+      "id": "5a185867-00b9-46fb-8af7-6befa553cf94",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        400,
+        0
+      ],
+      "id": "db2b1745-a361-473d-a54d-2f7c217c7430",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "6FLWjym5kPOTlj3Z",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        208
+      ],
+      "id": "87a47fa6-cfba-49bd-b4bd-dadfd5ae88d5",
+      "name": "Append row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "6FLWjym5kPOTlj3Z",
+          "name": "Google Sheets account 2"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -144,6 +224,13 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     },
@@ -157,6 +244,28 @@
           }
         ]
       ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -165,10 +274,11 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "47366838-22d5-4959-9104-7b898db73890",
+  "versionId": "12a9edc3-a90f-4d08-aeee-264f1b79abf6",
   "meta": {
-    "instanceId": "df3817e93dd9857866803348ccedc559e6131a9b0a110618d997e713531c8018"
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2334754f6b82c69a74002c054fba5bcd13c001f0a965ee433a5d02e5f60c3a76"
   },
-  "id": "nvYB7lOpVdvCHtXH",
+  "id": "HT57e8e4FsG07LUX",
   "tags": []
 }
