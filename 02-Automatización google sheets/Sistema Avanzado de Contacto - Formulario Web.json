@@ -346,13 +346,7 @@
             {
               "id": "0acce3ba-a172-4b6e-8c55-a4c193a42882",
               "name": "Error ",
-              "value": "={{ $json.body.email.}}",
-              "type": "string"
-            },
-            {
-              "id": "64f8ca49-fd00-4eb5-b864-985f99d4fc30",
-              "name": "",
-              "value": "",
+              "value": "={{ $json.body.email }}",
               "type": "string"
             }
           ]
@@ -384,8 +378,6 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "Email": "={{ $('Webhook').item.json.body.email }}",
-            "Teléfono": "={{ $('Webhook').item.json.body.telefono }}",
             "Fecha/Hora": "={{ $now.toISO() }}",
             "ID": "={{ Date.now()+'-'+Math.floor(Math.random()*10000) }}",
             "Error ": "={{ $json['Error '] }}"
@@ -395,26 +387,6 @@
             {
               "id": "ID",
               "displayName": "ID",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "Email",
-              "displayName": "Email",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "Teléfono",
-              "displayName": "Teléfono",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -535,7 +507,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "6c1a2d66-4b56-4ebf-a870-fed94c964836",
+  "versionId": "331997c2-343f-45dc-b4e4-ba22004e6e61",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "2334754f6b82c69a74002c054fba5bcd13c001f0a965ee433a5d02e5f60c3a76"
